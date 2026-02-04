@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi amor</title>
+    <style>
+        :root {
+            --bg-color: #050a1e;
+            --glass-color: rgba(50, 100, 255, 0.2);
+            --rose-color: #ff2d75;
+            --stem-color: #2e7d32;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            color: white;
+        }
+
+        /* Contenedor de la Cúpula */
+        .container {
+            position: relative;
+            width: 300px;
+            height: 450px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        .glass-dome {
+            position: absolute;
+            width: 250px;
+            height: 400px;
+            background: var(--glass-color);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 125px 125px 0 0;
+            bottom: 0;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 50px rgba(0, 100, 255, 0.3);
+            z-index: 2;
+        }
+
+        /* La Rosa */
+        .rose {
+            position: relative;
+            z-index: 3;
+            margin-bottom: 50px;
+            animation: glow 3s infinite alternate;
+        }
+
+        .flower {
+            width: 80px;
+            height: 60px;
+            background: var(--rose-color);
+            border-radius: 50px 50px 10px 10px;
+            position: relative;
+            box-shadow: 0 0 20px var(--rose-color);
+        }
+
+        .stem {
+            width: 8px;
+            height: 150px;
+            background: var(--stem-color);
+            margin: 0 auto;
+            border-radius: 4px;
+        }
+
+        .leaf {
+            width: 30px;
+            height: 15px;
+            background: var(--stem-color);
+            position: absolute;
+            border-radius: 20px 0 20px 0;
+            left: -20px;
+            top: 100px;
+            transform: rotate(-30deg);
+        }
+
+        /* Animación de caída de pétalos */
+        .petal {
+            position: absolute;
+            background: var(--rose-color);
+            width: 15px;
+            height: 20px;
+            border-radius: 50% 0 50% 50%;
+            opacity: 0.8;
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(400px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Texto */
+        .message {
+            text-align: center;
+            margin-top: 30px;
+            padding: 0 20px;
+            z-index: 5;
+        }
+
+        .message h2 {
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .message p {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff9800;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 5px var(--rose-color)); }
+            to { filter: drop-shadow(0 0 20px var(--rose-color)); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="glass-dome"></div>
+        <div class="rose">
+            <div class="flower"></div>
+            <div class="stem">
+                <div class="leaf"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="message">
+        <h2>Mi amor por ti durará hasta que caiga el último pétalo 💖</h2>
+    </div>
+
+    <script>
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.classList.add('petal');
+            
+            // Posición aleatoria
+            petal.style.left = Math.random() * window.innerWidth + 'px';
+            petal.style.top = '-20px';
+            
+            // Animación aleatoria
+            const duration = Math.random() * 3 + 4 + 's';
+            petal.style.animation = `fall ${duration} linear forwards`;
+            
+            document.body.appendChild(petal);
+
+            // Eliminar pétalo después de la animación
+            setTimeout(() => {
+                petal.remove();
+            }, 7000);
+        }
+
+        // Crear un pétalo cada 1.5 segundos
+        setInterval(createPetal, 1500);
+    </script>
+</body>
+</html>
